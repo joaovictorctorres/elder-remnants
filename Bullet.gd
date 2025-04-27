@@ -44,3 +44,27 @@ func _on_lifetime_timeout() -> void:
 # 	if body.has_method("take_damage"): # Verifica se o corpo atingido é um inimigo (por exemplo)
 # 		body.take_damage(1) # Causa dano (você precisará criar essa função no inimigo)
 # 	queue_free() # Bala se destrói ao atingir algo
+# ... (resto do código do bullet.gd: extends, exports, _ready, _physics_process, _on_lifetime_timeout) ...
+
+
+# Função conectada ao sinal 'body_entered' do Area2D
+func _on_body_entered(body: Node2D) -> void:
+	# 'body' é o nó que entrou na área da bala
+
+	# ---- NOVO: Ignorar o Player ----
+	# Se o corpo que entrou está no grupo "players", não faça nada e saia da função.
+	if body.is_in_group("players"):
+		return # Sai da função, ignorando o Player
+
+	# ---- Lógica Original (agora só roda se NÃO for o Player) ----
+	# Verifica se o corpo que entrou TEM o método 'take_damage' (será o Inimigo)
+	if body.has_method("take_damage"):
+		print("Bala atingiu um corpo com 'take_damage':", body.name) # Debug
+		# Chama a função take_damage no corpo atingido, passando 1 de dano
+		body.take_damage(1)
+		# Destroi a bala após atingir um alvo válido (Inimigo)
+		queue_free()
+
+	# Opcional: Destruir a bala se atingir uma parede (requer TileMap com colisão)
+	# elif body is TileMap: # Ou verificar por grupo ("parede")
+	#    queue_free()

@@ -55,6 +55,14 @@ attack_skill={
 ]
 }
 
+[layer_names]
+
+2d_render/layer_1="world"
+2d_render/layer_2="player"
+2d_render/layer_3="enemies"
+2d_render/layer_4="player_hitbox"
+2d_render/layer_5="enemy_hitbox"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
